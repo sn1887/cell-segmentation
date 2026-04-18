@@ -21,7 +21,16 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-On Kaggle, the notebook installs the same requirements and then calls the Python runner directly.
+On Kaggle, prefer leaving the preinstalled PyTorch/CUDA stack untouched:
+
+```bash
+pip install -r requirements-kaggle.txt
+pip install -e . --no-deps
+```
+
+If CUDA reports `no kernel image is available for execution on the device`, switch the notebook
+accelerator to a T4 GPU and restart the session. This usually means the active PyTorch wheel does
+not support the selected GPU architecture.
 
 ## Train
 
@@ -58,4 +67,3 @@ The inference dataset resolves each submission ID as a zero-padded JPG in the co
 ## Notebook
 
 Open `notebooks/train_kaggle.ipynb`. It composes the Hydra config inside Python, trains a model, and writes a submission without needing shell-only Hydra commands.
-
